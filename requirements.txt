@@ -1,0 +1,4 @@
+pycryptodome
+requests
+paho-mqtt
+urllib3
