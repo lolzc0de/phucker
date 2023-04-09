@@ -7,10 +7,13 @@ from urllib import request
 from os.path import exists, isfile
 
 pylips_url = "https://raw.githubusercontent.com/eslavnov/pylips/master/pylips.py"
+pylips_avail_cmd_url = "https://raw.githubusercontent.com/eslavnov/pylips/master/available_commands.json"
 
 def main():
 	if (exists("pylips.py") == False) or (isfile("pylips.py") == False):
-		download_pylips()
+		download(pylips_url, "pylips.py")
+	if (exists("available_commands.json") == False) or (isfile("available_commands.json") == False):
+		download(pylips_avail_cmd_url, "available_commands.json")
 	if (exists("settings.ini") == False) or (isfile("settings.ini") == False):
 		config()
 	
@@ -20,15 +23,15 @@ def main():
 
 def process_input(input):
 	# too bad we don't have switch-case in python :^)
-	if input == "exit":
+	if input == "exit" or input == "quit":
 		sys.exit(0)
 
-def download_pylips():
-	print("[*] pylips.py not found, downloading...")
+def download(url, filename):
+	print(f"[*] {filename} not found, downloading...")
 	try:
-		request.urlretrieve(pylips_url, "pylips.py")
+		request.urlretrieve(url, filename)
 	except:
-		print("[!] Failed to download pylips.py, check your internet connection and try again.")
+		print(f"[!] Failed to download {filename}, check your internet connection and try again.")
 		sys.exit(1)
 
 def config():
