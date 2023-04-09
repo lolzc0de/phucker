@@ -56,7 +56,7 @@ def config():
 		mqtt_tls = "False"
 		mqtt_cert = ""
 	
-	tv_host = ask_ip("Enter TV's IP Addres: ")
+	tv_host = ask_ip("Enter TV's IP Address: ")
 	
 	cfg_buffer = "[DEFAULT]\r\n"
 	cfg_buffer += "verbose = True\r\n"
