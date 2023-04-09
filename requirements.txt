@@ -2,3 +2,4 @@ pycryptodome
 requests
 paho-mqtt
 urllib3
+pwinput

@@ -2,6 +2,7 @@
 
 import sys
 import re
+from pwinput import pwinput
 from urllib import request
 from os.path import exists, isfile
 
@@ -36,13 +37,15 @@ def config():
 		mqtt_listen = ask_yesno("Do you wish to listen to MQTT commands? [no] ")
 		mqtt_update = ask_yesno("Do you wish to publish status updates over MQTT? [no] ")
 		mqtt_host = ask_ip("Enter MQTT broker's IP Address: ")
-		mqtt_port = ask_num("Enter MQTT broker's port: ")
+		mqtt_port = ask_port("Enter MQTT broker's port: ")
 		mqtt_user = input("Enter your MQTT Username: ")
 		# TODO: Make this not output anything (or at least stars)
-		mqtt_pass = input("Enter your MQTT Password: ")
+		mqtt_pass = pwinput(prompt="Enter your MQTT Password: ", mask="*")
 		mqtt_tls = ask_yesno("Do you wish to use TLS? [no] ")
 		if (mqtt_tls == "True"):
 			mqtt_cert = input("Enter full path to your certificate: ")
+		else:
+			mqtt_cert = ""
 	else:
 		mqtt_listen = "False"
 		mqtt_update = "False"
@@ -93,13 +96,13 @@ def ask_yesno(prompt):
 		else:
 			print("Please answer 'yes' or 'no'.\n")
 
-def ask_num(prompt):
+def ask_port(prompt):
 	while 1:
 		ret = input(prompt)
-		if ret.isnumeric():
+		if ret.isnumeric() and (ret > 0 and ret < 65536):
 			return ret
 		else:
-			print("Only numbers are a valid input.\n")
+			print("Supplied port has invalid value.\n")
 
 def ask_ip(prompt):
 	while 1:
